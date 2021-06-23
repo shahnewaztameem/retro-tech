@@ -18,3 +18,5 @@ const posts = [
       'GraphQL is a query language for APIs, created and open-sourced by Facebook in 2015. Being database and data-source agnostic means it can be used effectively in any context where an API is used and allows the user to cope with the need for speed, flexibility and efficiency in client-server communication. So, how does GraphQL accomplish this? There are many ways to implement architecture around it…GraphQL server with a connected database. This is a single Web server that implements the GraphQL specification, where when a query payload is read and processed by the server, it fetches the required information from the database. Then it constructs the response object as described in the specification and returns it to the user. GraphQL can be used with any available network protocol, whether it’s TCP, WebSockets, etc…',
   },
 ]
+
+export default posts;
