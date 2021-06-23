@@ -9,7 +9,8 @@ const getAllPosts = asyncHandler(async (req, res) => {
   if (posts) {
     res.json(posts)
   } else {
-    res.status(404).json({ message: 'No posts found!' })
+    res.status(404)
+    throw new Error('No posts found!')
   }
 })
 
@@ -22,7 +23,8 @@ const getPost = asyncHandler(async (req, res) => {
   if (post) {
     res.json(post)
   } else {
-    res.status(404).json({ message: 'Post not found!' })
+    res.status(404)
+    throw new Error('Post not found')
   }
 })
 export { getAllPosts, getPost }
