@@ -18,7 +18,7 @@ const getAllPosts = asyncHandler(async (req, res) => {
 // @route   GET /api/posts/:id
 //@access   Public
 const getPost = asyncHandler(async (req, res) => {
-  const post = await Post.findById(req.params.id)
+  const post = await Post.findById(req.params.id).populate('user', 'name')
 
   if (post) {
     res.json(post)
