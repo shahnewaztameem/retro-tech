@@ -9,7 +9,6 @@ const PostPage = ({ match }) => {
   const postDetails = useSelector((state) => state.postDetails)
 
   const { loading, post, error } = postDetails
-
   useEffect(() => {
     dispatch(listPostDetails(match.params.id))
   }, [dispatch, match])
@@ -21,7 +20,7 @@ const PostPage = ({ match }) => {
         <div>
           <Link to='/'>Back</Link>
           <img src={post.image} alt='' />
-          by {post.user.name}
+          {post.user?.name}
           <h1>{post.title}</h1>
           <p>{post.description}</p>
         </div>
