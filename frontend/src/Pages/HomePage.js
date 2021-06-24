@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listPosts } from '../actions/postActions'
+import Post from '../components/Post'
+import Loader from '../components/Loader'
 
 const HomePage = () => {
   const dispatch = useDispatch()
@@ -13,15 +15,21 @@ const HomePage = () => {
   }, [dispatch])
 
   return (
-    <div className='container mx-auto'>
-      {posts.map((post) => {
-        return (
-          <li>
-            {post.name} - {post.description} - <img src={post.image} alt='' />
-          </li>
-        )
-      })}
-    </div>
+    <>
+      {loading ? (
+        <Loader />
+      ) : (
+        <section className='text-gray-600 body-font'>
+          <div className='container px-5 py-24 mx-auto'>
+            <div className='flex flex-wrap -m-4'>
+              {posts.map((post) => (
+                <Post key={post._id} post={post} />
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+    </>
   )
 }
 
