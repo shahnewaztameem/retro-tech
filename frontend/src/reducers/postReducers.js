@@ -1,4 +1,7 @@
 import {
+  POST_DELETE_FAIL,
+  POST_DELETE_REQUEST,
+  POST_DELETE_SUCCESS,
   POST_DETAILS_FAIL,
   POST_DETAILS_REQUEST,
   POST_DETAILS_SUCCESS,
@@ -42,6 +45,28 @@ export const postDetailsReducer = (state = { post: {} }, action) => {
         post: action.payload,
       }
     case POST_DETAILS_FAIL:
+      return {
+        loading: false,
+        error: action.payload,
+      }
+    default:
+      return state
+  }
+}
+
+export const postDeleteReducer = (state = {}, action) => {
+  switch (action.type) {
+    case POST_DELETE_REQUEST:
+      return {
+        ...state,
+        loading: true,
+      }
+    case POST_DELETE_SUCCESS:
+      return {
+        loading: false,
+        success: true,
+      }
+    case POST_DELETE_FAIL:
       return {
         loading: false,
         error: action.payload,

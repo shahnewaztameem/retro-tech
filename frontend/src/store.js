@@ -1,12 +1,17 @@
 import { createStore, combineReducers, applyMiddleware } from 'redux'
 import thunk from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import { postDetailsReducer, postListReducer } from './reducers/postReducers'
+import {
+  postDeleteReducer,
+  postDetailsReducer,
+  postListReducer,
+} from './reducers/postReducers'
 import { userLoginReducer } from './reducers/userReducers'
 
 const reducer = combineReducers({
   postList: postListReducer,
   postDetails: postDetailsReducer,
+  postDelete: postDeleteReducer,
   userLogin: userLoginReducer,
 })
 
