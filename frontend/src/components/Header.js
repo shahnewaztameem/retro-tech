@@ -15,8 +15,16 @@ const Header = () => {
     <div>
       {userInfo ? (
         <div>
-          <Link to='/profile'>{userInfo.name}</Link>
-          <button onClick={logoutHandler}>Logout</button>
+          <button className='btn btn-blue'>
+            <Link to='/profile'>{userInfo.name}</Link>
+          </button>
+          <button className='btn btn-blue'>
+            <Link to='/admin/posts'>All posts</Link>
+          </button>
+
+          <button className='btn btn-blue' onClick={logoutHandler}>
+            Logout
+          </button>
         </div>
       ) : (
         <Link to='/login'>Login</Link>
