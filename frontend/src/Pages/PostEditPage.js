@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import axios from 'axios'
 import { listPostDetails, updatePost } from '../actions/postActions'
 import { useSelector, useDispatch } from 'react-redux'
 import Loader from '../components/Loader'
@@ -11,6 +12,7 @@ const PostEditPage = ({ match, history }) => {
   const [name, setName] = useState('')
   const [image, setImage] = useState('')
   const [description, setDescription] = useState('')
+  const [uploading, setUploading] = useState(false)
 
   const postDetails = useSelector((state) => state.postDetails)
   const { loading, error, post } = postDetails
@@ -49,6 +51,29 @@ const PostEditPage = ({ match, history }) => {
     )
   }
 
+  const uploadFileHandler = async (e) => {
+    const file = e.target.files[0]
+    const formData = new FormData()
+    formData.append('image', file)
+    setUploading(true)
+
+    try {
+      const config = {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      }
+
+      const { data } = await axios.post('/api/upload', formData, config)
+
+      setImage(data)
+      setUploading(false)
+    } catch (error) {
+      console.error(error)
+      setUploading(false)
+    }
+  }
+
   return (
     <div>
       {loading && <Loader />}
@@ -66,8 +91,11 @@ const PostEditPage = ({ match, history }) => {
           type='text'
           value={image}
           onChange={(e) => setImage(e.target.value)}
+          placeholder='enter custom image url'
         />
-
+        <label htmlFor=''>Choose an image</label>
+        <input type='file' custom onChange={uploadFileHandler} />
+        {uploading && <Loader />}
         <label htmlFor=''>Description:</label>
         <textarea
           type='text'
