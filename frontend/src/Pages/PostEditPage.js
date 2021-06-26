@@ -75,7 +75,7 @@ const PostEditPage = ({ match, history }) => {
   }
 
   return (
-    <div>
+    <div className='container mx-auto'>
       {loading && <Loader />}
       <h1>Edit post</h1>
       <form onSubmit={submitHandler}>
@@ -84,6 +84,7 @@ const PostEditPage = ({ match, history }) => {
           type='text'
           value={name}
           onChange={(e) => setName(e.target.value)}
+          className='w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 focus:bg-transparent text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
         />
 
         <label htmlFor=''>Image:</label>
@@ -92,17 +93,27 @@ const PostEditPage = ({ match, history }) => {
           value={image}
           onChange={(e) => setImage(e.target.value)}
           placeholder='enter custom image url'
+          className='w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 focus:bg-transparent text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
         />
         <label htmlFor=''>Choose an image</label>
-        <input type='file' custom onChange={uploadFileHandler} />
+        <input
+          type='file'
+          custom
+          onChange={uploadFileHandler}
+          className='w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-900 focus:bg-transparent text-base outline-none text-gray-100 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out'
+        />
         {uploading && <Loader />}
         <label htmlFor=''>Description:</label>
         <textarea
           type='text'
           value={description}
           onChange={(e) => setDescription(e.target.value)}
+          className='w-full bg-gray-800 bg-opacity-40 rounded border border-gray-700 focus:border-indigo-500 focus:bg-gray-900 focus:ring-2 focus:ring-indigo-900 h-32 text-base outline-none text-gray-100 py-1 px-3 resize-none leading-6 transition-colors duration-200 ease-in-out'
         />
-        <button> Update Post</button>
+        <button className='text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg'>
+          {' '}
+          Update Post
+        </button>
       </form>
     </div>
   )
