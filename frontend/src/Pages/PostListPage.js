@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react'
-import { listPosts, deletePost } from '../actions/postActions'
+import { listPosts, deletePost, createPost } from '../actions/postActions'
 import { useDispatch, useSelector } from 'react-redux'
 import Loader from '../components/Loader'
 import { Link } from 'react-router-dom'
+import { POST_CREATE_RESET } from '../constants/postConstants'
 
 const PostListPage = ({ match, history }) => {
   const dispatch = useDispatch()
@@ -16,18 +17,29 @@ const PostListPage = ({ match, history }) => {
     success,
   } = postDelete
 
-  console.log(posts)
+  const postCreate = useSelector((state) => state.postCreate)
+  const {
+    loading: loadingCreate,
+    error: errorCreate,
+    success: successCreate,
+    post: createdPost,
+  } = postCreate
 
   const userLogin = useSelector((state) => state.userLogin)
   const { userInfo } = userLogin
 
   useEffect(() => {
-    if (userInfo && userInfo.isAdmin) {
-      dispatch(listPosts())
-    } else {
-      history.push('/')
+    dispatch({ type: POST_CREATE_RESET })
+
+    if (!userInfo.isAdmin) {
+      history.push('/login')
     }
-  }, [dispatch, history, userInfo, success])
+    if (successCreate) {
+      history.push(`/admin/post/${createdPost._id}/edit`)
+    } else {
+      dispatch(listPosts())
+    }
+  }, [dispatch, history, userInfo, success, successCreate, createdPost])
 
   const deleteHandler = (id) => {
     if (window.confirm('Are you sure?')) {
@@ -35,7 +47,9 @@ const PostListPage = ({ match, history }) => {
     }
   }
 
-  const createPostHandler = () => {}
+  const createPostHandler = () => {
+    dispatch(createPost())
+  }
 
   return (
     <>
@@ -45,13 +59,18 @@ const PostListPage = ({ match, history }) => {
         <>
           {loadingPostDelete && <Loader />}
           {errorPostDelete && <p>{errorPostDelete}</p>}
+
+          {loadingCreate && <Loader />}
+          {errorCreate && <p>{errorCreate}</p>}
           <button onClick={createPostHandler}>Create a post</button>
           <table>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Decription</th>
-            </tr>
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Decription</th>
+              </tr>{' '}
+            </thead>
             <tbody>
               {posts.map((post) => (
                 <tr key={post._id}>
@@ -61,6 +80,7 @@ const PostListPage = ({ match, history }) => {
                   </td>
                   <td>{post.description.substring(0, 50)}...</td>
                   <td>
+                    <Link to={`/admin/post/${post._id}/edit`}>Edit Post</Link>
                     <button onClick={() => deleteHandler(post._id)}>
                       Delete
                     </button>

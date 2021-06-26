@@ -7,6 +7,7 @@ import PostPage from './Pages/PostPage'
 import LoginPage from './Pages/LoginPage'
 import ProfilePage from './Pages/ProfilePage'
 import PostListPage from './Pages/PostListPage'
+import PostEditPage from './Pages/PostEditPage'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/login' component={LoginPage} />
         <Route path='/profile' component={ProfilePage} />
         <Route path='/admin/posts' component={PostListPage} />
+        <Route path='/admin/post/:id/edit' component={PostEditPage} />
         <Route path='/post/:id' component={PostPage} />
         <Route path='/' component={HomePage} exact />
       </Switch>
